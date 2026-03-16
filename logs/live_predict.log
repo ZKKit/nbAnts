@@ -1,0 +1,270 @@
+2026-03-17 06:13:52,257 - __main__ - INFO - Starting live prediction
+2026-03-17 06:16:03,045 - __main__ - INFO - Starting live prediction
+2026-03-17 06:16:03,059 - src.model - INFO - Model loaded from results/final_model.joblib
+2026-03-17 06:16:03,059 - __main__ - INFO - Model loaded from results/final_model.joblib
+2026-03-17 06:16:03,059 - __main__ - INFO - Fetching data from 2024-02-26 to 2026-03-17
+2026-03-17 06:16:05,028 - __main__ - INFO - Fetched 750 BTC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:05,180 - __main__ - INFO - Fetched 750 ETH/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:05,324 - __main__ - INFO - Fetched 750 BNB/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:05,560 - __main__ - INFO - Fetched 750 SOL/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:05,698 - __main__ - INFO - Fetched 750 ADA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:05,842 - __main__ - INFO - Fetched 750 XRP/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:05,989 - __main__ - INFO - Fetched 750 DOT/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:06,145 - __main__ - INFO - Fetched 750 DOGE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:06,299 - __main__ - INFO - Fetched 750 AVAX/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:06,428 - __main__ - INFO - Fetched 198 MATIC/USDT candles, up to 2024-09-10 00:00:00
+2026-03-17 06:16:06,580 - __main__ - INFO - Fetched 750 LINK/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:06,721 - __main__ - INFO - Fetched 750 UNI/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:06,920 - __main__ - INFO - Fetched 750 ATOM/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:07,105 - __main__ - INFO - Fetched 750 LTC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:07,303 - __main__ - INFO - Fetched 750 BCH/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:07,466 - __main__ - INFO - Fetched 750 ALGO/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:07,603 - __main__ - INFO - Fetched 750 NEAR/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:07,983 - __main__ - INFO - Fetched 750 FIL/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:08,124 - __main__ - INFO - Fetched 750 ICP/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:08,265 - __main__ - INFO - Fetched 750 ETC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:08,657 - __main__ - INFO - Fetched 750 VET/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:08,809 - __main__ - INFO - Fetched 750 THETA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:08,974 - __main__ - INFO - Fetched 750 XLM/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:09,121 - __main__ - INFO - Fetched 456 EOS/USDT candles, up to 2025-05-26 00:00:00
+2026-03-17 06:16:09,297 - __main__ - INFO - Fetched 750 TRX/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:09,440 - __main__ - INFO - Fetched 323 FTM/USDT candles, up to 2025-01-13 00:00:00
+2026-03-17 06:16:09,590 - __main__ - INFO - Fetched 750 APE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:09,731 - __main__ - INFO - Fetched 750 SAND/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:09,931 - __main__ - INFO - Fetched 750 MANA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:10,093 - __main__ - INFO - Fetched 750 AAVE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:10,242 - __main__ - INFO - Fetched 568 MKR/USDT candles, up to 2025-09-15 00:00:00
+2026-03-17 06:16:10,393 - __main__ - INFO - Fetched 750 CRV/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:16:10,463 - __main__ - INFO - Fetched 22545 rows
+2026-03-17 06:21:25,477 - __main__ - INFO - Starting live prediction
+2026-03-17 06:21:25,490 - src.model - INFO - Model loaded from results/final_model.joblib
+2026-03-17 06:21:25,490 - __main__ - INFO - Model loaded from results/final_model.joblib
+2026-03-17 06:21:25,490 - __main__ - INFO - Fetching data from 2024-02-26 to 2026-03-17
+2026-03-17 06:21:27,573 - __main__ - INFO - Fetched 750 BTC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:27,775 - __main__ - INFO - Fetched 750 ETH/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:27,952 - __main__ - INFO - Fetched 750 BNB/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:28,107 - __main__ - INFO - Fetched 750 SOL/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:28,261 - __main__ - INFO - Fetched 750 ADA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:28,407 - __main__ - INFO - Fetched 750 XRP/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:28,572 - __main__ - INFO - Fetched 750 DOT/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:28,738 - __main__ - INFO - Fetched 750 DOGE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:28,882 - __main__ - INFO - Fetched 750 AVAX/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:29,012 - __main__ - INFO - Fetched 198 MATIC/USDT candles, up to 2024-09-10 00:00:00
+2026-03-17 06:21:29,151 - __main__ - INFO - Fetched 750 LINK/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:29,290 - __main__ - INFO - Fetched 750 UNI/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:29,481 - __main__ - INFO - Fetched 750 ATOM/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:29,634 - __main__ - INFO - Fetched 750 LTC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:29,778 - __main__ - INFO - Fetched 750 BCH/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:29,920 - __main__ - INFO - Fetched 750 ALGO/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:30,079 - __main__ - INFO - Fetched 750 NEAR/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:30,225 - __main__ - INFO - Fetched 750 FIL/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:30,416 - __main__ - INFO - Fetched 750 ICP/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:30,561 - __main__ - INFO - Fetched 750 ETC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:30,703 - __main__ - INFO - Fetched 750 VET/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:30,843 - __main__ - INFO - Fetched 750 THETA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:30,991 - __main__ - INFO - Fetched 750 XLM/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:31,182 - __main__ - INFO - Fetched 456 EOS/USDT candles, up to 2025-05-26 00:00:00
+2026-03-17 06:21:31,375 - __main__ - INFO - Fetched 750 TRX/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:31,513 - __main__ - INFO - Fetched 323 FTM/USDT candles, up to 2025-01-13 00:00:00
+2026-03-17 06:21:31,655 - __main__ - INFO - Fetched 750 APE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:31,815 - __main__ - INFO - Fetched 750 SAND/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:31,974 - __main__ - INFO - Fetched 750 MANA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:32,147 - __main__ - INFO - Fetched 750 AAVE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:32,300 - __main__ - INFO - Fetched 568 MKR/USDT candles, up to 2025-09-15 00:00:00
+2026-03-17 06:21:32,452 - __main__ - INFO - Fetched 750 CRV/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 06:21:32,524 - __main__ - INFO - Fetched 22545 rows
+2026-03-17 06:21:33,176 - __main__ - ERROR - Feature computation produced no data.
+2026-03-17 07:02:34,900 - __main__ - INFO - Loading model from C:\Users\Jack\Programming\Projects\Quants\results\final_model.joblib
+2026-03-17 07:02:34,917 - src.model - INFO - Model loaded from C:\Users\Jack\Programming\Projects\Quants\results\final_model.joblib
+2026-03-17 07:02:34,917 - __main__ - INFO - Model loaded. Type: ensemble, Target horizon: 5
+2026-03-17 07:02:34,918 - __main__ - INFO - Fetching data from 2025-02-09 to 2026-03-15
+2026-03-17 07:10:39,731 - __main__ - INFO - Using end_date = 2026-03-17
+2026-03-17 07:10:39,732 - __main__ - INFO - Fetching data...
+2026-03-17 07:10:41,659 - src.data_fetcher - INFO - Fetched 746 BTC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:41,810 - src.data_fetcher - INFO - Fetched 746 ETH/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:41,963 - src.data_fetcher - INFO - Fetched 746 BNB/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:42,204 - src.data_fetcher - INFO - Fetched 746 SOL/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:42,345 - src.data_fetcher - INFO - Fetched 746 ADA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:42,537 - src.data_fetcher - INFO - Fetched 746 XRP/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:42,680 - src.data_fetcher - INFO - Fetched 746 DOT/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:42,822 - src.data_fetcher - INFO - Fetched 746 DOGE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:42,964 - src.data_fetcher - INFO - Fetched 746 AVAX/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:43,098 - src.data_fetcher - INFO - Fetched 194 MATIC/USDT candles, up to 2024-09-10 00:00:00
+2026-03-17 07:10:43,294 - src.data_fetcher - INFO - Fetched 746 LINK/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:43,436 - src.data_fetcher - INFO - Fetched 746 UNI/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:43,591 - src.data_fetcher - INFO - Fetched 746 ATOM/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:43,735 - src.data_fetcher - INFO - Fetched 746 LTC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:43,927 - src.data_fetcher - INFO - Fetched 746 BCH/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:44,077 - src.data_fetcher - INFO - Fetched 746 ALGO/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:44,217 - src.data_fetcher - INFO - Fetched 746 NEAR/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:44,359 - src.data_fetcher - INFO - Fetched 746 FIL/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:44,512 - src.data_fetcher - INFO - Fetched 746 ICP/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:44,657 - src.data_fetcher - INFO - Fetched 746 ETC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:44,807 - src.data_fetcher - INFO - Fetched 746 VET/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:44,958 - src.data_fetcher - INFO - Fetched 746 THETA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:45,098 - src.data_fetcher - INFO - Fetched 746 XLM/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:45,245 - src.data_fetcher - INFO - Fetched 452 EOS/USDT candles, up to 2025-05-26 00:00:00
+2026-03-17 07:10:45,395 - src.data_fetcher - INFO - Fetched 746 TRX/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:45,530 - src.data_fetcher - INFO - Fetched 319 FTM/USDT candles, up to 2025-01-13 00:00:00
+2026-03-17 07:10:45,670 - src.data_fetcher - INFO - Fetched 746 APE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:45,811 - src.data_fetcher - INFO - Fetched 746 SAND/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:45,985 - src.data_fetcher - INFO - Fetched 746 MANA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:46,128 - src.data_fetcher - INFO - Fetched 746 AAVE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:46,266 - src.data_fetcher - INFO - Fetched 564 MKR/USDT candles, up to 2025-09-15 00:00:00
+2026-03-17 07:10:46,422 - src.data_fetcher - INFO - Fetched 746 CRV/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:10:46,490 - __main__ - INFO - Computing features...
+2026-03-17 07:10:46,493 - src.features - INFO - Computing features for 32 symbols
+2026-03-17 07:10:47,109 - src.features - INFO - After per-symbol indicators: 22417 rows
+2026-03-17 07:10:47,123 - src.features - INFO - After correlation features: 22417 rows
+2026-03-17 07:10:47,129 - src.features - INFO - After macro features: 22417 rows
+2026-03-17 07:10:47,148 - src.features - INFO - After liquidity filter (top 25): 18300 rows
+2026-03-17 07:10:47,149 - src.features - INFO - Latest date: 2026-03-16 00:00:00, symbols present: 25
+2026-03-17 07:10:47,150 - src.features - WARNING - NaNs on latest date:
+corr_btc_21d    25
+dtype: int64
+2026-03-17 07:10:47,152 - src.features - INFO - After dropping NaNs: 0 rows
+2026-03-17 07:10:47,155 - __main__ - ERROR - No data after feature engineering. Check your date range and symbols.
+2026-03-17 07:16:40,660 - __main__ - INFO - Using end_date = 2026-03-17
+2026-03-17 07:16:40,661 - __main__ - INFO - Fetching data...
+2026-03-17 07:16:42,435 - src.data_fetcher - INFO - Fetched 746 BTC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:42,681 - src.data_fetcher - INFO - Fetched 746 ETH/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:42,920 - src.data_fetcher - INFO - Fetched 746 BNB/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:43,057 - src.data_fetcher - INFO - Fetched 746 SOL/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:43,247 - src.data_fetcher - INFO - Fetched 746 ADA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:43,386 - src.data_fetcher - INFO - Fetched 746 XRP/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:43,528 - src.data_fetcher - INFO - Fetched 746 DOT/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:43,669 - src.data_fetcher - INFO - Fetched 746 DOGE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:43,811 - src.data_fetcher - INFO - Fetched 746 AVAX/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:43,936 - src.data_fetcher - INFO - Fetched 194 MATIC/USDT candles, up to 2024-09-10 00:00:00
+2026-03-17 07:16:44,123 - src.data_fetcher - INFO - Fetched 746 LINK/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:44,266 - src.data_fetcher - INFO - Fetched 746 UNI/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:44,408 - src.data_fetcher - INFO - Fetched 746 ATOM/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:44,550 - src.data_fetcher - INFO - Fetched 746 LTC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:44,738 - src.data_fetcher - INFO - Fetched 746 BCH/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:44,881 - src.data_fetcher - INFO - Fetched 746 ALGO/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:45,069 - src.data_fetcher - INFO - Fetched 746 NEAR/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:45,220 - src.data_fetcher - INFO - Fetched 746 FIL/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:45,361 - src.data_fetcher - INFO - Fetched 746 ICP/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:45,504 - src.data_fetcher - INFO - Fetched 746 ETC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:45,701 - src.data_fetcher - INFO - Fetched 746 VET/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:45,842 - src.data_fetcher - INFO - Fetched 746 THETA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:45,983 - src.data_fetcher - INFO - Fetched 746 XLM/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:46,118 - src.data_fetcher - INFO - Fetched 452 EOS/USDT candles, up to 2025-05-26 00:00:00
+2026-03-17 07:16:46,259 - src.data_fetcher - INFO - Fetched 746 TRX/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:46,536 - src.data_fetcher - INFO - Fetched 319 FTM/USDT candles, up to 2025-01-13 00:00:00
+2026-03-17 07:16:46,679 - src.data_fetcher - INFO - Fetched 746 APE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:46,819 - src.data_fetcher - INFO - Fetched 746 SAND/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:46,969 - src.data_fetcher - INFO - Fetched 746 MANA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:47,156 - src.data_fetcher - INFO - Fetched 746 AAVE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:47,295 - src.data_fetcher - INFO - Fetched 564 MKR/USDT candles, up to 2025-09-15 00:00:00
+2026-03-17 07:16:47,433 - src.data_fetcher - INFO - Fetched 746 CRV/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:16:47,505 - __main__ - INFO - Computing features...
+2026-03-17 07:16:47,507 - src.features - INFO - Computing features for 32 symbols
+2026-03-17 07:16:48,120 - src.features - INFO - After per-symbol indicators: 22417 rows
+2026-03-17 07:16:48,133 - src.features - INFO - After correlation features: 22417 rows
+2026-03-17 07:16:48,139 - src.features - INFO - After macro features: 22417 rows
+2026-03-17 07:16:48,158 - src.features - INFO - After liquidity filter (top 25): 18300 rows
+2026-03-17 07:16:48,160 - src.features - INFO - Latest date: 2026-03-16 00:00:00, symbols present: 25
+2026-03-17 07:16:48,161 - src.features - WARNING - NaNs on latest date:
+corr_btc_21d    25
+dtype: int64
+2026-03-17 07:16:48,164 - __main__ - INFO - Forward-filling NaNs per symbol...
+2026-03-17 07:16:48,194 - __main__ - ERROR - No symbols left after forward-fill and dropna.
+2026-03-17 07:20:48,178 - __main__ - INFO - Using end_date = 2026-03-17
+2026-03-17 07:20:48,178 - __main__ - INFO - Fetching data...
+2026-03-17 07:20:49,939 - src.data_fetcher - INFO - Fetched 746 BTC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:50,095 - src.data_fetcher - INFO - Fetched 746 ETH/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:50,250 - src.data_fetcher - INFO - Fetched 746 BNB/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:50,392 - src.data_fetcher - INFO - Fetched 746 SOL/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:50,537 - src.data_fetcher - INFO - Fetched 746 ADA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:50,694 - src.data_fetcher - INFO - Fetched 746 XRP/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:50,858 - src.data_fetcher - INFO - Fetched 746 DOT/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:51,002 - src.data_fetcher - INFO - Fetched 746 DOGE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:51,150 - src.data_fetcher - INFO - Fetched 746 AVAX/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:51,526 - src.data_fetcher - INFO - Fetched 194 MATIC/USDT candles, up to 2024-09-10 00:00:00
+2026-03-17 07:20:51,669 - src.data_fetcher - INFO - Fetched 746 LINK/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:51,811 - src.data_fetcher - INFO - Fetched 746 UNI/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:51,961 - src.data_fetcher - INFO - Fetched 746 ATOM/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:52,103 - src.data_fetcher - INFO - Fetched 746 LTC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:52,259 - src.data_fetcher - INFO - Fetched 746 BCH/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:52,411 - src.data_fetcher - INFO - Fetched 746 ALGO/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:52,554 - src.data_fetcher - INFO - Fetched 746 NEAR/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:52,708 - src.data_fetcher - INFO - Fetched 746 FIL/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:52,852 - src.data_fetcher - INFO - Fetched 746 ICP/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:53,263 - src.data_fetcher - INFO - Fetched 746 ETC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:53,410 - src.data_fetcher - INFO - Fetched 746 VET/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:53,564 - src.data_fetcher - INFO - Fetched 746 THETA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:53,713 - src.data_fetcher - INFO - Fetched 746 XLM/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:53,851 - src.data_fetcher - INFO - Fetched 452 EOS/USDT candles, up to 2025-05-26 00:00:00
+2026-03-17 07:20:54,003 - src.data_fetcher - INFO - Fetched 746 TRX/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:54,139 - src.data_fetcher - INFO - Fetched 319 FTM/USDT candles, up to 2025-01-13 00:00:00
+2026-03-17 07:20:54,523 - src.data_fetcher - INFO - Fetched 746 APE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:54,665 - src.data_fetcher - INFO - Fetched 746 SAND/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:54,809 - src.data_fetcher - INFO - Fetched 746 MANA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:54,969 - src.data_fetcher - INFO - Fetched 746 AAVE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:55,117 - src.data_fetcher - INFO - Fetched 564 MKR/USDT candles, up to 2025-09-15 00:00:00
+2026-03-17 07:20:55,274 - src.data_fetcher - INFO - Fetched 746 CRV/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:20:55,344 - __main__ - INFO - Computing features...
+2026-03-17 07:20:55,346 - src.features - INFO - Computing features for 32 symbols
+2026-03-17 07:20:55,957 - src.features - INFO - After per-symbol indicators: 22417 rows
+2026-03-17 07:20:55,971 - src.features - INFO - After correlation features: 22417 rows
+2026-03-17 07:20:55,978 - src.features - INFO - After macro features: 22417 rows
+2026-03-17 07:20:55,997 - src.features - INFO - After liquidity filter (top 25): 18300 rows
+2026-03-17 07:20:55,998 - src.features - INFO - Latest date: 2026-03-16 00:00:00, symbols present: 25
+2026-03-17 07:20:55,999 - src.features - WARNING - NaNs on latest date:
+corr_btc_21d    25
+dtype: int64
+2026-03-17 07:20:56,001 - __main__ - INFO - Forward-filling NaNs per symbol...
+2026-03-17 07:20:56,006 - __main__ - INFO - Latest date with features: 2026-03-16 00:00:00
+2026-03-17 07:20:56,008 - __main__ - ERROR - No symbols with complete features for the latest date.
+2026-03-17 07:23:25,892 - __main__ - INFO - Using end_date = 2026-03-17
+2026-03-17 07:23:25,893 - __main__ - INFO - Fetching data...
+2026-03-17 07:23:28,020 - src.data_fetcher - INFO - Fetched 746 BTC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:28,168 - src.data_fetcher - INFO - Fetched 746 ETH/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:28,412 - src.data_fetcher - INFO - Fetched 746 BNB/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:28,654 - src.data_fetcher - INFO - Fetched 746 SOL/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:28,805 - src.data_fetcher - INFO - Fetched 746 ADA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:28,956 - src.data_fetcher - INFO - Fetched 746 XRP/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:29,108 - src.data_fetcher - INFO - Fetched 746 DOT/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:29,250 - src.data_fetcher - INFO - Fetched 746 DOGE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:29,442 - src.data_fetcher - INFO - Fetched 746 AVAX/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:29,571 - src.data_fetcher - INFO - Fetched 194 MATIC/USDT candles, up to 2024-09-10 00:00:00
+2026-03-17 07:23:29,713 - src.data_fetcher - INFO - Fetched 746 LINK/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:29,859 - src.data_fetcher - INFO - Fetched 746 UNI/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:30,003 - src.data_fetcher - INFO - Fetched 746 ATOM/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:30,150 - src.data_fetcher - INFO - Fetched 746 LTC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:30,290 - src.data_fetcher - INFO - Fetched 746 BCH/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:30,430 - src.data_fetcher - INFO - Fetched 746 ALGO/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:30,573 - src.data_fetcher - INFO - Fetched 746 NEAR/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:30,861 - src.data_fetcher - INFO - Fetched 746 FIL/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:31,002 - src.data_fetcher - INFO - Fetched 746 ICP/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:31,149 - src.data_fetcher - INFO - Fetched 746 ETC/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:31,294 - src.data_fetcher - INFO - Fetched 746 VET/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:31,485 - src.data_fetcher - INFO - Fetched 746 THETA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:31,629 - src.data_fetcher - INFO - Fetched 746 XLM/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:31,812 - src.data_fetcher - INFO - Fetched 452 EOS/USDT candles, up to 2025-05-26 00:00:00
+2026-03-17 07:23:31,957 - src.data_fetcher - INFO - Fetched 746 TRX/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:32,093 - src.data_fetcher - INFO - Fetched 319 FTM/USDT candles, up to 2025-01-13 00:00:00
+2026-03-17 07:23:32,238 - src.data_fetcher - INFO - Fetched 746 APE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:32,387 - src.data_fetcher - INFO - Fetched 746 SAND/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:32,527 - src.data_fetcher - INFO - Fetched 746 MANA/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:32,667 - src.data_fetcher - INFO - Fetched 746 AAVE/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:32,808 - src.data_fetcher - INFO - Fetched 564 MKR/USDT candles, up to 2025-09-15 00:00:00
+2026-03-17 07:23:33,101 - src.data_fetcher - INFO - Fetched 746 CRV/USDT candles, up to 2026-03-16 00:00:00
+2026-03-17 07:23:33,168 - __main__ - INFO - Computing features...
+2026-03-17 07:23:33,170 - src.features - INFO - Computing features for 32 symbols
+2026-03-17 07:23:33,781 - src.features - INFO - After per-symbol indicators: 22417 rows
+2026-03-17 07:23:33,795 - src.features - INFO - After correlation features: 22417 rows
+2026-03-17 07:23:33,802 - src.features - INFO - After macro features: 22417 rows
+2026-03-17 07:23:33,820 - src.features - INFO - After liquidity filter (top 25): 18300 rows
+2026-03-17 07:23:33,821 - src.features - INFO - Latest date: 2026-03-16 00:00:00, symbols present: 25
+2026-03-17 07:23:33,822 - src.features - WARNING - NaNs on latest date:
+corr_btc_21d    25
+dtype: int64
+2026-03-17 07:23:33,824 - __main__ - INFO - Forward-filling NaNs per symbol...
+2026-03-17 07:23:33,829 - __main__ - INFO - Latest date with features: 2026-03-16 00:00:00
+2026-03-17 07:23:33,831 - __main__ - WARNING - NaNs detected in features on latest date:
+corr_btc_21d    25
+dtype: int64
+2026-03-17 07:23:33,842 - __main__ - INFO - Filled remaining NaNs with column median (or zero).
+2026-03-17 07:23:33,843 - __main__ - ERROR - Still have NaNs after filling. Cannot proceed.

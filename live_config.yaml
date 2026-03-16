@@ -1,0 +1,82 @@
+# Live prediction configuration – mirrors training config's feature section
+# and adds paths for model and output.
+
+data:
+  symbols:
+    - BTC/USDT
+    - ETH/USDT
+    - BNB/USDT
+    - SOL/USDT
+    - ADA/USDT
+    - XRP/USDT
+    - DOT/USDT
+    - DOGE/USDT
+    - AVAX/USDT
+    - MATIC/USDT
+    - LINK/USDT
+    - UNI/USDT
+    - ATOM/USDT
+    - LTC/USDT
+    - BCH/USDT
+    - ALGO/USDT
+    - NEAR/USDT
+    - FIL/USDT
+    - ICP/USDT
+    - ETC/USDT
+    - VET/USDT
+    - THETA/USDT
+    - XLM/USDT
+    - EOS/USDT
+    - TRX/USDT
+    - FTM/USDT
+    - APE/USDT
+    - SAND/USDT
+    - MANA/USDT
+    - AAVE/USDT
+    - MKR/USDT
+    - CRV/USDT
+  start_date: "2024-03-01"          # 2 years back from today (enough for all windows)
+  end_date: null                     # null = today's date
+  exchange: "binance"
+  timeframe: "1d"
+
+# Must match the features used during training – copy from original config.yaml
+features:
+  technical_indicators:
+    - rsi
+    - macd
+    - bbands
+    - atr
+    - garman_klass_vol
+    - volume_ratio
+    - price_position
+    - adx
+    - obv
+    - stoch_k
+  rolling_returns: [1, 5, 21, 63]
+  rolling_volatility: [21]
+  rolling_correlation: [21]
+  macro_indicators:
+    benchmark: "BTC/USDT"
+    benchmark_returns: [1, 5, 21, 63]
+    benchmark_volatility: [21]
+    benchmark_sma: [50, 200]
+  dollar_volume_rank: true
+  top_n_liquid: 25
+
+# Paths
+model_path: "results/final_model.joblib"   # saved model from backtest
+output:
+  predictions_file: "live_predictions.csv"   # CSV with symbol and predicted return
+  # Optional: compute portfolio weights (requires portfolio section)
+  # portfolio:
+  #   top_n: 10
+  #   weight_method: "volatility_targeting"
+  #   max_weight: 0.2
+  #   min_weight: 0.01
+  #   target_volatility: 0.25
+  #   transaction_cost: 0.0015
+
+logging:
+  level: "INFO"
+  file: "logs/live_predict.log"

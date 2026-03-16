@@ -1,0 +1,128 @@
+# Crypto Algo Trading – Enhanced with market regime filter and macro features
+
+data:
+  symbols:
+    - BTC/USDT
+    - ETH/USDT
+    - BNB/USDT
+    - SOL/USDT
+    - ADA/USDT
+    - XRP/USDT
+    - DOT/USDT
+    - DOGE/USDT
+    - AVAX/USDT
+    - MATIC/USDT
+    - LINK/USDT
+    - UNI/USDT
+    - ATOM/USDT
+    - LTC/USDT
+    - BCH/USDT
+    - ALGO/USDT
+    - NEAR/USDT
+    - FIL/USDT
+    - ICP/USDT
+    - ETC/USDT
+    - VET/USDT
+    - THETA/USDT
+    - XLM/USDT
+    - EOS/USDT
+    - TRX/USDT
+    - FTM/USDT
+    - APE/USDT
+    - SAND/USDT
+    - MANA/USDT
+    - AAVE/USDT
+    - MKR/USDT
+    - CRV/USDT
+  start_date: "2020-01-01"
+  end_date: "2026-01-01"
+  exchange: "binance"
+  timeframe: "1d"
+
+features:
+  technical_indicators:
+    - rsi
+    - macd
+    - bbands
+    - atr
+    - garman_klass_vol
+    - volume_ratio
+    - price_position
+    - adx
+    - obv
+    - stoch_k
+  rolling_returns: [1, 5, 21, 63]          # momentum features
+  rolling_volatility: [21]                  # recent volatility
+  rolling_correlation: [21]                  # correlation with BTC
+  # New macro features
+  macro_indicators:
+    benchmark: "BTC/USDT"
+    benchmark_returns: [1, 5, 21, 63]        # returns of BTC
+    benchmark_volatility: [21]                 # volatility of BTC
+    benchmark_sma: [50, 200]                   # distance to SMAs
+  dollar_volume_rank: true
+  top_n_liquid: 25
+
+model:
+  type: "ensemble"                           # use both XGB and LGB
+  target_horizon: 5                           # 5‑day forward return
+  classification: false                      # regression
+  train_window: 730                          # ~2 years of trading days
+  retrain_frequency: 21                       # every 3 weeks
+  confidence_threshold: 0.0                    # not used
+  use_feature_selection: true
+  early_stopping_rounds: 20
+  hyperparameters:
+    xgboost:
+      n_estimators: 1500
+      max_depth: 6
+      learning_rate: 0.02
+      subsample: 0.8
+      colsample_bytree: 0.8
+      reg_alpha: 0.1
+      reg_lambda: 0.1
+      tree_method: "hist"
+    lightgbm:
+      n_estimators: 1500
+      max_depth: 6
+      learning_rate: 0.02
+      subsample: 0.8
+      feature_fraction: 0.8
+      reg_alpha: 0.1
+      reg_lambda: 0.1
+
+portfolio:
+  top_n: 10                                  # hold up to 10 assets
+  weight_method: "volatility_targeting"       # risk‑based weighting
+  max_weight: 0.2                              # 20% cap
+  min_weight: 0.01                              # 1% floor
+  target_volatility: 0.25                       # annualised target vol
+  stop_loss: 0.20                               # sell if down 20% from entry
+  transaction_cost: 0.0015                       # 0.15%
+  rebalance_frequency: "1W"                      # weekly rebalance
+
+risk:
+  volatility_scaling: true                     # dynamically adjust capital based on market volatility
+  benchmark_for_vol: "BTC/USDT"
+  max_market_volatility: 0.80
+  min_capital_factor: 0.2
+
+  # New trend filter
+  trend_filter:
+    enabled: true
+    benchmark: "BTC/USDT"
+    sma_period: 300
+    capital_multiplier_when_below: 0.1          # reduce to 10% when below SMA
+    capital_multiplier_when_above: 1.0
+
+backtest:
+  initial_capital: 1000000
+  benchmark_symbol: "BTC/USDT"
+
+logging:
+  level: "INFO"
+  file: "logs/trading.log"
+
+output:
+  plots_dir: "plots"
+  results_dir: "results"
