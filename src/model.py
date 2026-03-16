@@ -1,4 +1,5 @@
 # XGBoost/LightGBM training and prediction – regression, feature selection, early stopping, ensemble
+# Now stores feature names used during training for prediction alignment.
 
 import pandas as pd
 import numpy as np
@@ -37,6 +38,7 @@ class TradingModel:
 
         self.model = None          # will hold trained model(s)
         self.selected_features = None
+        self.training_features = None   # list of feature names used in training
 
     def prepare_features_target(self, df):
         """Create target (forward return) and separate features. Drops rows with NaN target."""
@@ -63,6 +65,9 @@ class TradingModel:
 
     def train(self, X, y, X_val=None, y_val=None):
         """Train a model with optional validation for early stopping."""
+        # Store the feature names used in training
+        self.training_features = X.columns.tolist()
+
         eval_set = None
         use_early_stop = False
         if X_val is not None and y_val is not None and len(X_val) > 0:
@@ -153,6 +158,7 @@ class TradingModel:
 
                 self.model = (xgb_model, lgb_model)
                 self.selected_features = None
+                # training_features already set
                 return
 
             self.model = model
@@ -160,6 +166,18 @@ class TradingModel:
 
     def predict(self, X):
         """Generate predictions (probabilities for classification, raw for regression)."""
+        # Subset to training features if they are known (to handle extra columns)
+        if self.training_features is not None:
+            # Find intersection of training features and X columns
+            common = [col for col in self.training_features if col in X.columns]
+            if len(common) != len(self.training_features):
+                missing = set(self.training_features) - set(X.columns)
+                logger.warning(f"Missing features in prediction: {missing}. Filling with 0.")
+                # Add missing columns with 0
+                for col in missing:
+                    X[col] = 0.0
+            X = X[self.training_features]
+
         if self.selected_features is not None:
             X = X[self.selected_features]
 
@@ -175,7 +193,6 @@ class TradingModel:
             else:
                 pred = self.model.predict(X)
 
-        # For regression, no threshold; for classification apply confidence threshold
         if self.classification:
             pred = np.where(pred >= self.confidence_threshold, pred, 0)
         return pred
@@ -258,6 +275,7 @@ class TradingModel:
             'model_type': self.model_type,
             'model': model_to_save,
             'selected_features': self.selected_features,
+            'training_features': self.training_features,
             'classification': self.classification,
             'confidence_threshold': self.confidence_threshold,
             'hyperparams': self.hyperparams,
@@ -270,7 +288,8 @@ class TradingModel:
         data = joblib.load(path)
         self.model_type = data['model_type']
         self.model = data['model']
-        self.selected_features = data['selected_features']
+        self.selected_features = data.get('selected_features', None)
+        self.training_features = data.get('training_features', None)
         self.classification = data['classification']
         self.confidence_threshold = data['confidence_threshold']
         self.hyperparams = data.get('hyperparams', {})

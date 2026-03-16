@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 """
-Live prediction using a saved model.
-Fetches latest data, computes features, and outputs predicted returns.
-Handles NaN features by forward-filling per symbol, then filling any remaining
-NaNs on the latest date with the column median.
+live_predict.py – Generate live trading signals using a saved model.
+Assumes you have run `run.py` at least once to produce a saved model.
 """
 
 import os
 import sys
 import yaml
 import pandas as pd
-import numpy as np
 import logging
 import argparse
-from datetime import datetime
+from datetime import datetime, timedelta
 
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -24,127 +21,114 @@ from src.portfolio import PortfolioBuilder
 from src.utils import setup_logging
 
 def main(config_path='live_config.yaml'):
-    # Load config
+    if not os.path.exists(config_path):
+        print(f"ERROR: {config_path} not found. Please create it from config.yaml")
+        return
+
     with open(config_path, 'r') as f:
         config = yaml.safe_load(f)
 
-    # Setup logging
-    log_file = config.get('logging', {}).get('file', 'logs/live_predict.log')
-    os.makedirs(os.path.dirname(log_file), exist_ok=True)
-    setup_logging({'logging': config.get('logging', {'level': 'INFO', 'file': log_file})})
+    setup_logging(config)
     logger = logging.getLogger(__name__)
 
-    # Determine end_date: if null/None, use today
-    data_cfg = config['data']
-    if data_cfg.get('end_date') is None:
-        data_cfg['end_date'] = datetime.today().strftime('%Y-%m-%d')
-        logger.info(f"Using end_date = {data_cfg['end_date']}")
+    # Determine results directory (fallback to 'results' if not in config)
+    results_dir = config.get('output', {}).get('results_dir', 'results')
+    model_path = os.path.join(results_dir, 'final_model.joblib')
+    if not os.path.exists(model_path):
+        logger.error(f"Saved model not found at {model_path}. Run the backtest first.")
+        return
 
-    # 1. Fetch historical data
-    logger.info("Fetching data...")
-    fetcher = DataFetcher(config)   # expects DataFetcher to accept dict
+    model = TradingModel(config)
+    model.load_model(model_path)
+    logger.info("Model loaded successfully.")
+
+    # Fetch recent data
+    logger.info("Fetching recent market data...")
+    fetcher = DataFetcher(config_path)
     raw_data = fetcher.fetch_all()
     if raw_data.empty:
-        logger.error("No data fetched. Exiting.")
+        logger.error("No data fetched.")
         return
 
-    # 2. Feature engineering – keep NaNs for now (dropna=False)
+    logger.info(f"Raw data: {len(raw_data)} rows, from {raw_data.index.get_level_values(0).min()} to {raw_data.index.get_level_values(0).max()}")
+
+    # Compute features (do not drop NaNs yet – we'll inspect later)
     logger.info("Computing features...")
     engineer = FeatureEngineer(config)
-    featured_data = engineer.compute_features(raw_data, dropna=False)
+    featured_data = engineer.compute_features(raw_data, dropna=False)  # Keep NaNs for now
     if featured_data.empty:
-        logger.error("No data after feature engineering. Check your date range and symbols.")
+        logger.error("Feature computation produced no data.")
         return
 
-    # 3. Forward-fill missing values per symbol to carry forward the last valid value.
-    logger.info("Forward-filling NaNs per symbol...")
-    featured_data = featured_data.groupby('symbol').ffill()
-
-    # 4. Extract the latest date's data
-    latest_date = featured_data.index.get_level_values('timestamp').max()
-    logger.info(f"Latest date with features: {latest_date}")
-
-    latest_df = featured_data.xs(latest_date, level='timestamp')  # index = symbols
-
-    # 5. Prepare feature matrix for the latest date
-    exclude_cols = ['open', 'high', 'low', 'close', 'volume', 'symbol', 'target']
-    feature_cols = [c for c in latest_df.columns if c not in exclude_cols]
-    X_live = latest_df[feature_cols]
-
-    # 6. Handle any remaining NaNs on the latest date
-    nan_counts = X_live.isnull().sum()
-    if nan_counts.sum() > 0:
-        logger.warning(f"NaNs detected in features on latest date:\n{nan_counts[nan_counts > 0]}")
-        # Fill NaNs with the median of that feature across all symbols
-        for col in X_live.columns:
-            if X_live[col].isnull().any():
-                median_val = X_live[col].median()
-                if pd.isna(median_val):   # entire column is NaN
-                    median_val = 0.0       # fallback to zero (neutral value)
-                X_live[col].fillna(median_val, inplace=True)
-        logger.info("Filled remaining NaNs with column median (or zero).")
-
-    # Final check
-    if X_live.isnull().any().any():
-        logger.error("Still have NaNs after filling. Cannot proceed.")
-        return
-
-    logger.info(f"Symbols retained: {len(X_live)}")
-
-    # 7. Load model
-    logger.info("Loading model...")
-    model = TradingModel(config)  # dummy config, will be overwritten by load
-    model.load_model(config['model_path'])
-
-    # If feature selection was used, subset columns
-    if model.selected_features is not None:
-        missing = set(model.selected_features) - set(X_live.columns)
-        if missing:
-            logger.error(f"Missing features in live data: {missing}")
+    # Check NaNs on the latest date
+    latest_date = featured_data.index.get_level_values(0).max()
+    latest_df = featured_data.loc[latest_date]
+    nan_cols = latest_df.columns[latest_df.isnull().any()].tolist()
+    if nan_cols:
+        logger.warning(f"NaNs present in columns for latest date: {nan_cols}")
+        # Optionally drop rows with NaNs on the latest date
+        # For prediction, we need to drop them because model can't handle NaNs.
+        # We'll drop rows where any NaN is present.
+        featured_data = featured_data.dropna()
+        logger.info(f"Dropped rows with NaNs, remaining rows: {len(featured_data)}")
+        if featured_data.empty:
+            logger.error("No data left after dropping NaNs on latest date.")
             return
-        X_live = X_live[model.selected_features]
+        # Recompute latest date after dropping
+        latest_date = featured_data.index.get_level_values(0).max()
+        logger.info(f"New latest date after dropping NaNs: {latest_date}")
 
-    # 8. Predict
-    logger.info("Generating predictions...")
-    predictions = model.predict(X_live)  # returns numpy array
-    pred_series = pd.Series(predictions, index=X_live.index, name='pred_return')
+    # Get data for the latest date
+    pred_data = featured_data.loc[latest_date:latest_date].copy()
+    if pred_data.empty:
+        logger.error("No data for latest date.")
+        return
 
-    # Filter positive predictions (optional)
-    pos = pred_series[pred_series > 0].sort_values(ascending=False)
-    logger.info(f"Symbols with positive predicted return: {len(pos)}")
+    # Prepare features for prediction
+    X_pred = model.prepare_features(pred_data)
+    if X_pred.empty:
+        logger.error("Feature preparation failed.")
+        return
 
-    # 9. Save predictions
-    out_path = config['output'].get('predictions_file', 'live_predictions.csv')
-    pos.to_csv(out_path, header=True)
-    logger.info(f"Predictions saved to {out_path}")
+    # Predict
+    pred = model.predict(X_pred)
+    signals = pd.Series(pred, index=pred_data.index, name='signal')
+    # Convert to simple symbol index (drop timestamp level)
+    signals = signals.droplevel(0)
 
-    # 10. Optional: compute portfolio weights
-    if 'portfolio' in config['output']:
-        port_cfg = config['output']['portfolio']
-        prices = featured_data['close'].unstack('symbol')
-        prices = prices.ffill()
-        # Use the latest available prices
-        latest_prices = prices.loc[latest_date]
+    # Output top signals
+    top_signals = signals.sort_values(ascending=False).head(10)
+    logger.info(f"Top 10 signals for {latest_date.date()}:\n{top_signals}")
 
-        signals = pred_series
-        builder = PortfolioBuilder({'portfolio': port_cfg})
+    # Build portfolio weights for execution (optional)
+    if 'portfolio' not in config:
+        logger.error("Portfolio configuration missing. Cannot compute weights.")
+        return
 
-        selected = builder.select_top_assets(signals, latest_date)
-        if not selected:
-            logger.warning("No assets selected for portfolio.")
-        else:
-            weights = builder.compute_weights(prices, selected, latest_date, signals=signals)
-            if weights:
-                weights_df = pd.Series(weights).sort_values(ascending=False)
-                weights_path = out_path.replace('.csv', '_weights.csv')
-                weights_df.to_csv(weights_path, header=True)
-                logger.info(f"Portfolio weights saved to {weights_path}")
+    prices = featured_data['close'].unstack('symbol').ffill()
+    latest_prices = prices.loc[latest_date]
+
+    builder = PortfolioBuilder(config)
+    selected = builder.select_top_assets(signals, latest_date)
+    if selected:
+        weights = builder.compute_weights(prices, selected, latest_date, signals=signals)
+        logger.info(f"Recommended weights: {weights}")
+        # Save signals and weights to a CSV
+        output_df = pd.DataFrame({
+            'symbol': list(weights.keys()),
+            'weight': list(weights.values()),
+            'signal': [signals.loc[sym] for sym in weights.keys()]
+        })
+        output_path = os.path.join(results_dir, f'signals_{latest_date.date()}.csv')
+        output_df.to_csv(output_path, index=False)
+        logger.info(f"Signals saved to {output_path}")
+    else:
+        logger.info("No assets selected – no trade recommendation.")
 
     logger.info("Live prediction completed.")
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Live prediction using trained model')
-    parser.add_argument('--config', type=str, default='live_config.yaml',
-                        help='Path to live configuration YAML')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--config', type=str, default='live_config.yaml', help='Path to config file')
     args = parser.parse_args()
     main(args.config)

@@ -1,4 +1,5 @@
 # Feature engineering – technical indicators, rolling stats, and macro features
+# Robust version with fixed correlation and dropna parameter
 
 import pandas as pd
 import numpy as np
@@ -23,8 +24,7 @@ class FeatureEngineer:
         """
         df: MultiIndex (timestamp, symbol) with columns:
             open, high, low, close, volume
-        dropna: if True, drop rows with any NaN (used in training).
-                If False, return data with possible NaNs (used in live).
+        dropna: if True, drop rows with any NaN at the end.
         Returns DataFrame with added features.
         """
         df = df.sort_index()
@@ -94,18 +94,36 @@ class FeatureEngineer:
         if self.rolling_correlation and self.macro_config:
             benchmark = self.macro_config['benchmark']
             if benchmark in symbols:
+                # Get benchmark close series
                 bench_series = df.xs(benchmark, level='symbol')['close']
+                # Compute returns (will have NaNs at first)
+                returns = df.groupby('symbol')['close'].pct_change()
+                bench_returns = bench_series.pct_change()
+
                 for window in self.rolling_correlation:
-                    def corr_with_btc(group):
-                        ret = group['close'].pct_change()
-                        common_idx = ret.index.intersection(bench_series.index)
-                        if len(common_idx) < window:
+                    def corr_with_bench(group):
+                        sym = group.name
+                        if sym == benchmark:
                             return pd.Series(index=group.index, dtype=float)
-                        ret_align = ret.loc[common_idx]
-                        btc_ret = bench_series.loc[common_idx].pct_change()
-                        corr = ret_align.rolling(window).corr(btc_ret)
-                        return corr.reindex(group.index)
-                    df[f'corr_btc_{window}d'] = df.groupby('symbol').apply(corr_with_btc).droplevel(0)
+                        sym_returns = returns.xs(sym, level='symbol')
+                        # Drop NaNs from both series before aligning
+                        sym_clean = sym_returns.dropna()
+                        bench_clean = bench_returns.dropna()
+                        # Align on common dates
+                        common_idx = sym_clean.index.intersection(bench_clean.index)
+                        if len(common_idx) < 5:  # need at least a few points
+                            # Fallback: fill with 0 (no correlation)
+                            return pd.Series(0.0, index=group.index)
+
+                        # Compute rolling correlation with min_periods=5
+                        corr = sym_clean.loc[common_idx].rolling(window, min_periods=5).corr(bench_clean.loc[common_idx])
+                        # Forward fill to propagate to all dates in the original group
+                        corr = corr.reindex(group.index).ffill()
+                        # Any remaining NaNs at the beginning fill with 0
+                        corr = corr.fillna(0)
+                        return corr
+
+                    df[f'corr_btc_{window}d'] = df.groupby('symbol').apply(corr_with_bench).droplevel(0)
         logger.info(f"After correlation features: {len(df)} rows")
 
         # --- Macro features (common to all symbols) ---
@@ -113,6 +131,7 @@ class FeatureEngineer:
             bench = self.macro_config['benchmark']
             if bench in symbols:
                 bench_df = df.xs(bench, level='symbol')[['close']].copy()
+                # Use pct_change without filling (NaNs will be handled later)
                 for lag in self.macro_config.get('benchmark_returns', []):
                     bench_df[f'bench_ret_{lag}d'] = bench_df['close'].pct_change(lag)
                 for window in self.macro_config.get('benchmark_volatility', []):
@@ -142,9 +161,10 @@ class FeatureEngineer:
         if nan_counts.sum() > 0:
             logger.warning(f"NaNs on latest date:\n{nan_counts[nan_counts > 0]}")
 
-        # Drop rows with any NaN if requested
         if dropna:
             df.dropna(inplace=True)
             logger.info(f"After dropping NaNs: {len(df)} rows")
+        else:
+            logger.info("dropna=False: NaNs retained (may cause issues in prediction)")
 
         return df
