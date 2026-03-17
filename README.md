@@ -24,7 +24,7 @@ This project implements a complete machine learning pipeline for algorithmic tra
 ## Prerequisites & Installation
 
 ### System Requirements
-- Python 3.9–3.11 (due to package dependencies; Python 3.12+ may cause issues with some libraries)
+- Python
 - pip package manager
 
 ### Installation
@@ -180,8 +180,8 @@ python live_predict.py --config my_live_config.yaml
 
 ## License
 
-This project is provided for educational and research purposes. Use it at your own risk. No warranty or guarantee of profitability is implied. For commercial use, please consult the licenses of the individual dependencies.
+This project is provided for educational and research purposes only. Use it at your own risk. No warranty or guarantee of profitability is implied.
 
 ---
 
-**Disclaimer**: Trading cryptocurrencies involves substantial risk. This software is not financial advice. Always backtest thoroughly and consult a professional before deploying real capital.
+**Disclaimer**: Trading cryptocurrencies involves risk. This project is not financial advice. This project does not provide any investment advice. The providers are not responsible for any loss caused or potentially caused. Always backtest thoroughly and consult a professional before deploying real capital.
