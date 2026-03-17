@@ -83,10 +83,22 @@ class PortfolioBuilder:
                 return {sym: w for sym in selected_symbols}
 
             returns = hist_prices.pct_change().dropna()
-            # Use exponential weighted volatility for more responsiveness
+            if returns.empty:
+                logger.warning(f"No valid returns for volatility estimation on {date}, fallback to equal")
+                w = 1.0 / len(selected_symbols)
+                return {sym: w for sym in selected_symbols}
+
             vols = returns.ewm(span=21, adjust=False).std().iloc[-1] * np.sqrt(252)
-            # Replace zero or NaN vols with median
-            vols = vols.replace(0, np.nan).fillna(vols.median())
+            # Replace NaN or infinite volatilities with the median of the remaining symbols
+            vols = vols.replace([np.inf, -np.inf], np.nan)
+            if vols.isnull().any():
+                median_vol = vols.median(skipna=True)
+                if pd.isna(median_vol) or median_vol == 0:
+                    # If median is also NaN/0, fallback to equal weights
+                    logger.warning(f"Median volatility is invalid on {date}, fallback to equal")
+                    w = 1.0 / len(selected_symbols)
+                    return {sym: w for sym in selected_symbols}
+                vols = vols.fillna(median_vol)
 
             # 3. Scale raw_weights by inverse volatility to achieve target portfolio volatility
             inv_vol_weights = raw_weights / vols

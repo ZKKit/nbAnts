@@ -1,11 +1,11 @@
-Total Return: 1127.61%
-Annualized Return: 34.56%
-Volatility: 59.16%
-Sharpe Ratio: 0.584
-Sortino Ratio: 0.773
-Max Drawdown: -75.36%
-Calmar Ratio: 0.459
-Beta: 0.660
-Alpha (ann): 0.075
-Total Trades: 4741
-Avg Trades per Rebalance: 16.6
+Total Return: 2676.70%
+Annualized Return: 48.21%
+Volatility: 56.31%
+Sharpe Ratio: 0.856
+Sortino Ratio: 1.075
+Max Drawdown: -73.42%
+Calmar Ratio: 0.657
+Beta: 0.626
+Alpha (ann): 0.225
+Total Trades: 9642
+Avg Trades per Rebalance: 9.5
