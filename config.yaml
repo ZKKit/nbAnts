@@ -54,7 +54,7 @@ features:
   rolling_returns: [1, 5, 21, 63]          # momentum features
   rolling_volatility: [21]                  # recent volatility
   rolling_correlation: [21]                  # correlation with BTC
-  # New macro features
+
   macro_indicators:
     benchmark: "BTC/USDT"
     benchmark_returns: [1, 5, 21, 63]        # returns of BTC
@@ -107,7 +107,6 @@ risk:
   max_market_volatility: 0.80
   min_capital_factor: 0.2
 
-  # New trend filter
   trend_filter:
     enabled: true
     benchmark: "BTC/USDT"
