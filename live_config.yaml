@@ -35,7 +35,7 @@ data:
     - MKR/USDT
     - CRV/USDT
   start_date: "2025-03-01"      # adjust as needed (must be far enough back)
-  end_date: "2026-03-18"        # today's date (update manually)
+  end_date: "2026-03-01"        # today's date (update manually) but let's say today is 2026-03-01
   exchange: "binance"
   timeframe: "1d"
 
