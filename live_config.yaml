@@ -120,6 +120,6 @@ logging:
   level: "INFO"
   file: "logs/trading.log"
 
-output:                             # <-- ADD THIS SECTION
+output:
   plots_dir: "plots"
   results_dir: "results"
