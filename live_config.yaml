@@ -73,57 +73,64 @@ features:
   - adx
   - obv
   - stoch_k
+  - ichimoku
+  - keltner
+  - psar
+  - mfi
+  - williams_r
+  - cci
   top_n_liquid: 25
 logging:
   file: logs/trading.log
   level: INFO
 model:
+  device: cpu
   classification: false
   confidence_threshold: 0.0
-  early_stopping_rounds: 20
+  early_stopping_rounds: 19
   hyperparameters:
     lightgbm:
-      feature_fraction: 0.888736420247719
-      learning_rate: 0.008875870053151358
+      feature_fraction: 0.8338783908575864
+      learning_rate: 0.012971750631350589
       max_depth: 6
-      n_estimators: 2100
-      reg_alpha: 0.07245766564473412
-      reg_lambda: 0.00017025908439420904
-      subsample: 0.7535275201239526
+      n_estimators: 2700
+      reg_alpha: 0.025626253628595816
+      reg_lambda: 1.520858322316545e-05
+      subsample: 0.7342037035318101
     xgboost:
-      colsample_bytree: 0.6256422738816271
-      learning_rate: 0.007921749700557874
-      max_depth: 3
-      n_estimators: 900
-      reg_alpha: 0.0010407234291093925
-      reg_lambda: 1.693059383541428e-05
-      subsample: 0.7106643183979099
+      colsample_bytree: 0.5165041281758599
+      learning_rate: 0.005248591967808008
+      max_depth: 5
+      n_estimators: 1400
+      reg_alpha: 0.00012595884869156314
+      reg_lambda: 3.552944338688753e-05
+      subsample: 0.6794045166391425
       tree_method: hist
-  retrain_frequency: 21
-  target_horizon: 5
-  train_window: 730
+  retrain_frequency: 18
+  target_horizon: 2
+  train_window: 1825
   type: ensemble
   use_feature_selection: true
 output:
   plots_dir: plots
   results_dir: results
 portfolio:
-  max_weight: 0.2
-  min_weight: 0.01
-  rebalance_frequency: 4H
-  stop_loss: 0.2505217831681552
-  target_volatility: 0.24710206442208724
+  max_weight: 0.18106215623795036
+  min_weight: 0.03582363608210489
+  rebalance_frequency: 2D
+  stop_loss: 0.28984304202732203
+  target_volatility: 0.2918818144945132
   top_n: 5
   transaction_cost: 0.0015
   weight_method: volatility_targeting
 risk:
   benchmark_for_vol: BTC/USDT
-  max_market_volatility: 0.7800432061194466
-  min_capital_factor: 0.3964315650194006
+  max_market_volatility: 0.89090015705478
+  min_capital_factor: 0.4752980295970772
   trend_filter:
     benchmark: BTC/USDT
     capital_multiplier_when_above: 1.0
-    capital_multiplier_when_below: 0.01861889346597006
+    capital_multiplier_when_below: 0.017284851783159125
     enabled: true
-    sma_period: 120
+    sma_period: 130
   volatility_scaling: true

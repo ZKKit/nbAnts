@@ -1,5 +1,10 @@
 # XGBoost/LightGBM training and prediction – regression, feature selection, early stopping, ensemble
 # Now stores feature names used during training for prediction alignment.
+# Supports GPU acceleration via 'device' parameter.
+
+# src/model.py (updated with robust GPU fallback)
+
+# src/model.py (updated with verbose=0 in XGBoost fit calls)
 
 import pandas as pd
 import numpy as np
@@ -26,19 +31,38 @@ class TradingModel:
         if self.early_stopping is not None:
             self.early_stopping = int(self.early_stopping)
 
+        # Device selection
+        self.device = config['model'].get('device', 'cpu')
+
         hp = config['model']['hyperparameters']
         if self.model_type == 'xgboost':
-            self.hyperparams = hp['xgboost']
+            self.hyperparams = hp['xgboost'].copy()
         elif self.model_type == 'lightgbm':
-            self.hyperparams = hp['lightgbm']
+            self.hyperparams = hp['lightgbm'].copy()
         elif self.model_type == 'ensemble':
-            self.hyperparams = {'xgb': hp['xgboost'], 'lgb': hp['lightgbm']}
+            self.hyperparams = {
+                'xgb': hp['xgboost'].copy(),
+                'lgb': hp['lightgbm'].copy()
+            }
         else:
             raise ValueError(f"Unknown model type: {self.model_type}")
+
+        # Inject device into hyperparameters (will be overridden later if needed)
+        if self.device != 'cpu':
+            if self.model_type == 'xgboost':
+                self.hyperparams['device'] = self.device
+            elif self.model_type == 'lightgbm':
+                self.hyperparams['device'] = self.device
+            elif self.model_type == 'ensemble':
+                self.hyperparams['xgb']['device'] = self.device
+                self.hyperparams['lgb']['device'] = self.device
 
         self.model = None          # will hold trained model(s)
         self.selected_features = None
         self.training_features = None   # list of feature names used in training
+
+        # Flags for GPU fallback
+        self._lgb_cuda_available = True   # assume CUDA works initially
 
     def prepare_features_target(self, df):
         """Create target (forward return) and separate features. Drops rows with NaN target."""
@@ -107,6 +131,7 @@ class TradingModel:
                 final = xgb.XGBRegressor(**params, verbosity=0, random_state=42) \
                         if not self.classification else \
                         xgb.XGBClassifier(**params, verbosity=0, random_state=42)
+                final.fit(X_selected, y, eval_set=eval_set_sel, verbose=0)   # <-- ADDED verbose=0
             else:
                 params = self.hyperparams.copy()
                 if early_stopping:
@@ -114,8 +139,8 @@ class TradingModel:
                 final = lgb.LGBMRegressor(**params, verbose=-1, random_state=42) \
                         if not self.classification else \
                         lgb.LGBMClassifier(**params, verbose=-1, random_state=42)
+                final.fit(X_selected, y, eval_set=eval_set_sel)
 
-            final.fit(X_selected, y, eval_set=eval_set_sel)
             self.model = final
 
         else:
@@ -127,16 +152,33 @@ class TradingModel:
                 model = xgb.XGBRegressor(**params, verbosity=0, random_state=42) \
                         if not self.classification else \
                         xgb.XGBClassifier(**params, verbosity=0, random_state=42)
-                model.fit(X, y, eval_set=eval_set)
+                model.fit(X, y, eval_set=eval_set, verbose=0)   # <-- ADDED verbose=0
 
             elif self.model_type == 'lightgbm':
                 params = self.hyperparams.copy()
                 if early_stopping:
                     params['early_stopping_rounds'] = early_stopping
-                model = lgb.LGBMRegressor(**params, verbose=-1, random_state=42) \
-                        if not self.classification else \
-                        lgb.LGBMClassifier(**params, verbose=-1, random_state=42)
-                model.fit(X, y, eval_set=eval_set)
+                # If GPU is requested but we know it's unavailable, remove device param
+                if self.device in ('cuda', 'gpu') and not self._lgb_cuda_available:
+                    params.pop('device', None)
+                    logger.info("LightGBM GPU unavailable, using CPU.")
+                try:
+                    model = lgb.LGBMRegressor(**params, verbose=-1, random_state=42) \
+                            if not self.classification else \
+                            lgb.LGBMClassifier(**params, verbose=-1, random_state=42)
+                    model.fit(X, y, eval_set=eval_set)
+                except Exception as e:
+                    err_str = str(e)
+                    if self.device in ('cuda', 'gpu') and self._lgb_cuda_available and ('CUDA' in err_str or 'GPU' in err_str):
+                        logger.warning(f"LightGBM GPU training failed: {e}. Falling back to CPU.")
+                        self._lgb_cuda_available = False
+                        params.pop('device', None)
+                        model = lgb.LGBMRegressor(**params, verbose=-1, random_state=42) \
+                                if not self.classification else \
+                                lgb.LGBMClassifier(**params, verbose=-1, random_state=42)
+                        model.fit(X, y, eval_set=eval_set)
+                    else:
+                        raise
 
             else:  # ensemble
                 # Train both models
@@ -146,19 +188,36 @@ class TradingModel:
                 xgb_model = xgb.XGBRegressor(**xgb_params, verbosity=0, random_state=42) \
                             if not self.classification else \
                             xgb.XGBClassifier(**xgb_params, verbosity=0, random_state=42)
-                xgb_model.fit(X, y, eval_set=eval_set)
+                xgb_model.fit(X, y, eval_set=eval_set, verbose=0)   # <-- ADDED verbose=0
 
+                # LightGBM part with GPU fallback logic
                 lgb_params = self.hyperparams['lgb'].copy()
                 if early_stopping:
                     lgb_params['early_stopping_rounds'] = early_stopping
-                lgb_model = lgb.LGBMRegressor(**lgb_params, verbose=-1, random_state=42) \
-                            if not self.classification else \
-                            lgb.LGBMClassifier(**lgb_params, verbose=-1, random_state=42)
-                lgb_model.fit(X, y, eval_set=eval_set)
+                # If GPU is requested but we know it's unavailable, remove device param
+                if self.device in ('cuda', 'gpu') and not self._lgb_cuda_available:
+                    lgb_params.pop('device', None)
+                    logger.info("LightGBM GPU unavailable, using CPU.")
+                try:
+                    lgb_model = lgb.LGBMRegressor(**lgb_params, verbose=-1, random_state=42) \
+                                if not self.classification else \
+                                lgb.LGBMClassifier(**lgb_params, verbose=-1, random_state=42)
+                    lgb_model.fit(X, y, eval_set=eval_set)
+                except Exception as e:
+                    err_str = str(e)
+                    if self.device in ('cuda', 'gpu') and self._lgb_cuda_available and ('CUDA' in err_str or 'GPU' in err_str):
+                        logger.warning(f"LightGBM GPU training failed: {e}. Falling back to CPU.")
+                        self._lgb_cuda_available = False
+                        lgb_params.pop('device', None)
+                        lgb_model = lgb.LGBMRegressor(**lgb_params, verbose=-1, random_state=42) \
+                                    if not self.classification else \
+                                    lgb.LGBMClassifier(**lgb_params, verbose=-1, random_state=42)
+                        lgb_model.fit(X, y, eval_set=eval_set)
+                    else:
+                        raise
 
                 self.model = (xgb_model, lgb_model)
                 self.selected_features = None
-                # training_features already set
                 return
 
             self.model = model
@@ -279,7 +338,8 @@ class TradingModel:
             'classification': self.classification,
             'confidence_threshold': self.confidence_threshold,
             'hyperparams': self.hyperparams,
-            'target_horizon': self.target_horizon
+            'target_horizon': self.target_horizon,
+            'device': self.device
         }, path)
         logger.info(f"Model saved to {path}")
 
@@ -294,4 +354,5 @@ class TradingModel:
         self.confidence_threshold = data['confidence_threshold']
         self.hyperparams = data.get('hyperparams', {})
         self.target_horizon = data.get('target_horizon', 1)
+        self.device = data.get('device', 'cpu')
         logger.info(f"Model loaded from {path}")

@@ -1,5 +1,5 @@
 # Feature engineering – technical indicators, rolling stats, and macro features
-# Robust version with fixed correlation and dropna parameter
+# Now includes: Ichimoku, Keltner, Parabolic SAR, MFI, Williams %R, CCI
 
 import pandas as pd
 import numpy as np
@@ -39,6 +39,7 @@ class FeatureEngineer:
             sdf = df.xs(symbol, level='symbol').copy()
             sdf['symbol'] = symbol
 
+            # Existing indicators
             if 'rsi' in self.tech_indicators:
                 sdf['rsi'] = ta.rsi(sdf['close'], length=14)
             if 'macd' in self.tech_indicators:
@@ -77,6 +78,42 @@ class FeatureEngineer:
                 stoch = ta.stoch(sdf['high'], sdf['low'], sdf['close'], k=14, d=3)
                 sdf['stoch_k'] = stoch['STOCHk_14_3_3'] if stoch is not None else np.nan
 
+            # --- New indicators ---
+            if 'ichimoku' in self.tech_indicators:
+                ichimoku = ta.ichimoku(sdf['high'], sdf['low'], sdf['close'],
+                                        tenkan=9, kijun=26, senkou=52)
+                if ichimoku is not None:
+                    # ichimoku returns a DataFrame with multiple columns
+                    # We'll extract the conversion line (tenkan) and base line (kijun)
+                    sdf['ichimoku_tenkan'] = ichimoku['ITS_9']
+                    sdf['ichimoku_kijun'] = ichimoku['IKS_26']
+                    # Optionally include lagging span? Usually not needed for signal.
+
+            if 'keltner' in self.tech_indicators:
+                keltner = ta.kc(sdf['high'], sdf['low'], sdf['close'], length=20, scalar=2)
+                if keltner is not None:
+                    # Returns columns: KCe_20, KCm_20, KCu_20
+                    sdf['keltner_upper'] = keltner['KCu_20']
+                    sdf['keltner_lower'] = keltner['KCl_20']
+                    sdf['keltner_mid'] = keltner['KCm_20']
+
+            if 'psar' in self.tech_indicators:
+                psar = ta.psar(sdf['high'], sdf['low'], sdf['close'])
+                if psar is not None:
+                    sdf['psar'] = psar['PSARl_0.02_0.2']  # or PSARs depending on trend
+
+            if 'mfi' in self.tech_indicators:
+                mfi = ta.mfi(sdf['high'], sdf['low'], sdf['close'], sdf['volume'], length=14)
+                sdf['mfi'] = mfi
+
+            if 'williams_r' in self.tech_indicators:
+                willr = ta.willr(sdf['high'], sdf['low'], sdf['close'], length=14)
+                sdf['williams_r'] = willr
+
+            if 'cci' in self.tech_indicators:
+                cci = ta.cci(sdf['high'], sdf['low'], sdf['close'], length=20)
+                sdf['cci'] = cci
+
             for lag in self.rolling_returns:
                 sdf[f'ret_{lag}d'] = sdf['close'].pct_change(lag)
 
@@ -94,9 +131,7 @@ class FeatureEngineer:
         if self.rolling_correlation and self.macro_config:
             benchmark = self.macro_config['benchmark']
             if benchmark in symbols:
-                # Get benchmark close series
                 bench_series = df.xs(benchmark, level='symbol')['close']
-                # Compute returns (will have NaNs at first)
                 returns = df.groupby('symbol')['close'].pct_change()
                 bench_returns = bench_series.pct_change()
 
@@ -106,20 +141,13 @@ class FeatureEngineer:
                         if sym == benchmark:
                             return pd.Series(index=group.index, dtype=float)
                         sym_returns = returns.xs(sym, level='symbol')
-                        # Drop NaNs from both series before aligning
                         sym_clean = sym_returns.dropna()
                         bench_clean = bench_returns.dropna()
-                        # Align on common dates
                         common_idx = sym_clean.index.intersection(bench_clean.index)
-                        if len(common_idx) < 5:  # need at least a few points
-                            # Fallback: fill with 0 (no correlation)
+                        if len(common_idx) < 5:
                             return pd.Series(0.0, index=group.index)
-
-                        # Compute rolling correlation with min_periods=5
                         corr = sym_clean.loc[common_idx].rolling(window, min_periods=5).corr(bench_clean.loc[common_idx])
-                        # Forward fill to propagate to all dates in the original group
                         corr = corr.reindex(group.index).ffill()
-                        # Any remaining NaNs at the beginning fill with 0
                         corr = corr.fillna(0)
                         return corr
 
@@ -131,7 +159,6 @@ class FeatureEngineer:
             bench = self.macro_config['benchmark']
             if bench in symbols:
                 bench_df = df.xs(bench, level='symbol')[['close']].copy()
-                # Use pct_change without filling (NaNs will be handled later)
                 for lag in self.macro_config.get('benchmark_returns', []):
                     bench_df[f'bench_ret_{lag}d'] = bench_df['close'].pct_change(lag)
                 for window in self.macro_config.get('benchmark_volatility', []):
