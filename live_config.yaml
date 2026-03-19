@@ -2,8 +2,8 @@ backtest:
   benchmark_symbol: BTC/USDT
   initial_capital: 1000000
 data:
-  start_date: '2026-01-01'
-  end_date: '2026-03-01'
+  start_date: '2026-02-17'
+  end_date: '2026-03-17'
   exchange: binance
   symbols:
   - BTC/USDT
@@ -84,30 +84,30 @@ logging:
   file: logs/trading.log
   level: INFO
 model:
-  device: cpu
   classification: false
   confidence_threshold: 0.0
-  early_stopping_rounds: 19
+  device: cpu
+  early_stopping_rounds: 2
   hyperparameters:
     lightgbm:
-      feature_fraction: 0.8338783908575864
-      learning_rate: 0.012971750631350589
-      max_depth: 6
-      n_estimators: 2700
-      reg_alpha: 0.025626253628595816
-      reg_lambda: 1.520858322316545e-05
-      subsample: 0.7342037035318101
+      feature_fraction: 0.9365762298230432
+      learning_rate: 0.07641464329594759
+      max_depth: 10
+      n_estimators: 2600
+      reg_alpha: 0.0022797170259640843
+      reg_lambda: 0.001146052652715009
+      subsample: 0.41400000000000003
     xgboost:
-      colsample_bytree: 0.5165041281758599
-      learning_rate: 0.005248591967808008
-      max_depth: 5
-      n_estimators: 1400
-      reg_alpha: 0.00012595884869156314
-      reg_lambda: 3.552944338688753e-05
-      subsample: 0.6794045166391425
+      colsample_bytree: 0.329
+      learning_rate: 0.0021525906680967682
+      max_depth: 3
+      n_estimators: 2200
+      reg_alpha: 0.8908429798374393
+      reg_lambda: 0.0004090432448301884
+      subsample: 0.829
       tree_method: hist
-  retrain_frequency: 18
-  target_horizon: 2
+  retrain_frequency: 21
+  target_horizon: 8
   train_window: 1825
   type: ensemble
   use_feature_selection: true
@@ -115,22 +115,22 @@ output:
   plots_dir: plots
   results_dir: results
 portfolio:
-  max_weight: 0.18106215623795036
-  min_weight: 0.03582363608210489
-  rebalance_frequency: 2D
-  stop_loss: 0.28984304202732203
-  target_volatility: 0.2918818144945132
-  top_n: 5
+  max_weight: 0.48960000000000004
+  min_weight: 0.0257
+  rebalance_frequency: 5H
+  stop_loss: 0.4723
+  target_volatility: 0.4924
+  top_n: 7
   transaction_cost: 0.0015
   weight_method: volatility_targeting
 risk:
   benchmark_for_vol: BTC/USDT
-  max_market_volatility: 0.89090015705478
-  min_capital_factor: 0.4752980295970772
+  max_market_volatility: 0.8702000000000001
+  min_capital_factor: 0.3494
   trend_filter:
     benchmark: BTC/USDT
     capital_multiplier_when_above: 1.0
-    capital_multiplier_when_below: 0.017284851783159125
+    capital_multiplier_when_below: 0.2404
     enabled: true
-    sma_period: 130
+    sma_period: 109
   volatility_scaling: true

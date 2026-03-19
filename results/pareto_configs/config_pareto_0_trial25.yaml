@@ -1,0 +1,136 @@
+backtest:
+  benchmark_symbol: BTC/USDT
+  initial_capital: 1000000
+data:
+  end_date: '2026-01-01'
+  exchange: binance
+  start_date: '2020-01-01'
+  symbols:
+  - BTC/USDT
+  - ETH/USDT
+  - BNB/USDT
+  - SOL/USDT
+  - ADA/USDT
+  - XRP/USDT
+  - DOT/USDT
+  - DOGE/USDT
+  - AVAX/USDT
+  - MATIC/USDT
+  - LINK/USDT
+  - UNI/USDT
+  - ATOM/USDT
+  - LTC/USDT
+  - BCH/USDT
+  - ALGO/USDT
+  - NEAR/USDT
+  - FIL/USDT
+  - ICP/USDT
+  - ETC/USDT
+  - VET/USDT
+  - THETA/USDT
+  - XLM/USDT
+  - EOS/USDT
+  - TRX/USDT
+  - FTM/USDT
+  - APE/USDT
+  - SAND/USDT
+  - MANA/USDT
+  - AAVE/USDT
+  - MKR/USDT
+  - CRV/USDT
+  timeframe: 1h
+features:
+  dollar_volume_rank: true
+  macro_indicators:
+    benchmark: BTC/USDT
+    benchmark_returns:
+    - 1
+    - 5
+    - 21
+    - 63
+    benchmark_sma:
+    - 50
+    - 200
+    benchmark_volatility:
+    - 21
+  rolling_correlation:
+  - 21
+  rolling_returns:
+  - 1
+  - 5
+  - 21
+  - 63
+  rolling_volatility:
+  - 21
+  technical_indicators:
+  - rsi
+  - macd
+  - bbands
+  - atr
+  - garman_klass_vol
+  - volume_ratio
+  - price_position
+  - adx
+  - obv
+  - stoch_k
+  - ichimoku
+  - keltner
+  - psar
+  - mfi
+  - williams_r
+  - cci
+  top_n_liquid: 25
+logging:
+  file: logs/trading.log
+  level: INFO
+model:
+  classification: false
+  confidence_threshold: 0.0
+  device: cpu
+  early_stopping_rounds: 2
+  hyperparameters:
+    lightgbm:
+      feature_fraction: 0.9365762298230432
+      learning_rate: 0.07641464329594759
+      max_depth: 10
+      n_estimators: 2600
+      reg_alpha: 0.0022797170259640843
+      reg_lambda: 0.001146052652715009
+      subsample: 0.41400000000000003
+    xgboost:
+      colsample_bytree: 0.329
+      learning_rate: 0.0021525906680967682
+      max_depth: 3
+      n_estimators: 2200
+      reg_alpha: 0.8908429798374393
+      reg_lambda: 0.0004090432448301884
+      subsample: 0.829
+      tree_method: hist
+  retrain_frequency: 21
+  target_horizon: 8
+  train_window: 1825
+  type: ensemble
+  use_feature_selection: true
+output:
+  plots_dir: plots
+  results_dir: results
+portfolio:
+  max_weight: 0.48960000000000004
+  min_weight: 0.0257
+  rebalance_frequency: 5H
+  stop_loss: 0.4723
+  target_volatility: 0.4924
+  top_n: 7
+  transaction_cost: 0.0015
+  weight_method: volatility_targeting
+risk:
+  benchmark_for_vol: BTC/USDT
+  max_market_volatility: 0.8702000000000001
+  min_capital_factor: 0.3494
+  trend_filter:
+    benchmark: BTC/USDT
+    capital_multiplier_when_above: 1.0
+    capital_multiplier_when_below: 0.2404
+    enabled: true
+    sma_period: 109
+  volatility_scaling: true
